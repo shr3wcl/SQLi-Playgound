@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.sqliplayground.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

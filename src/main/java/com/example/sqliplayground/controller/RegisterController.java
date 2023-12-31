@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.sqliplayground.controller;
 
-import com.example.demo.entity.User;
-import com.example.demo.service.DBService;
+import com.example.sqliplayground.entity.User;
+import com.example.sqliplayground.service.DBService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

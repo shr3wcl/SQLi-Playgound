@@ -1,8 +1,8 @@
-package com.example.demo.controller;
+package com.example.sqliplayground.controller;
 
-import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.DBService;
+import com.example.sqliplayground.entity.User;
+import com.example.sqliplayground.repository.UserRepository;
+import com.example.sqliplayground.service.DBService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

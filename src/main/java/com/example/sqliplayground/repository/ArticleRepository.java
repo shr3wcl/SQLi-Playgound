@@ -1,8 +1,7 @@
-package com.example.demo.repository;
+package com.example.sqliplayground.repository;
 
-import com.example.demo.entity.Article;
+import com.example.sqliplayground.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

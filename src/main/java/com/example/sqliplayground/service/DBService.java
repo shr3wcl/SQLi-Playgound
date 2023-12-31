@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.sqliplayground.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 
