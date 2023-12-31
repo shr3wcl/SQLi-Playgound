@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chính</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+            text-align: center;
+        }
+
+        div {
+            margin: 20px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        h2 {
+            color: #3498db;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #3498db;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .button-link:hover {
+            background-color: #1c70b6;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            margin-right: 15px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p th:text="${msg}"></p>
+</div>
+<div>
+    <p>Xin chào <b th:text="${session.name}"></b></p>
+</div>
+<h2 th:text="${session.username}"></h2>
+
+
+<div>
+    <a class="button-link" href="/articles">Danh sách các bài viết</a>
+</div>
+<div>
+    <a class="button-link" th:href="'/user?id=' + ${session.id}">Thông tin cá nhân</a>
+</div>
+<div th:if="${#strings.equals(session.username, 'admin')}">
+    <a class="button-link" href="/users">Quản lý người dùng</a>
+</div>
+<div>
+    <a class="button-link" href="/logout">Đăng xuất</a>
+</div>
+</body>
+</html>
