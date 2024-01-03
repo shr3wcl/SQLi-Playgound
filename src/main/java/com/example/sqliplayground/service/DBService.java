@@ -6,9 +6,9 @@ import java.sql.*;
 
 public class DBService {
 
-    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/db_web?allowMultiQueries=true";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/postgres";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "123456";
     public Connection connection;
     public DBService(){
         try {

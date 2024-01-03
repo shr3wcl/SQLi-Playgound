@@ -90,6 +90,24 @@
 </head>
 <body>
 <div>
+    <form action="/search" method="get">
+        <p>Tìm kiếm bài viết</p>
+        <label>
+            <input type="text" name="key">
+        </label>
+<!--        <label>-->
+<!--            Chọn bảng:-->
+<!--            <select name="tablename">-->
+<!--                <option value="users">Người dùng</option>-->
+<!--                <option value="article">Bài viết</option>-->
+<!--            </select>-->
+<!--        </label>-->
+
+        <input type="submit" value="Tìm">
+    </form>
+
+</div>
+<div>
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>
@@ -97,7 +115,7 @@
             <th>Tiêu đề</th>
             <th>Nội dung</th>
             <th>Tác giả</th>
-            <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

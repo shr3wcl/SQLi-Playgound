@@ -3,12 +3,11 @@ package com.example.sqliplayground.controller;
 import com.example.sqliplayground.entity.Article;
 import com.example.sqliplayground.repository.ArticleRepository;
 import com.example.sqliplayground.service.DBService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.ResultSet;
@@ -25,6 +24,14 @@ public class ArticleController {
     @GetMapping("/articles")
     public String showArticlePage(Model model){
         List<Article> articleList = articleRepository.findAll();
+        model.addAttribute("articleList", articleList);
+        return "articles";
+    }
+
+    @Transactional
+    @GetMapping("/search")
+    public String showSearchPage(Model model, @RequestParam("key") String key ){
+        List<Article> articleList = articleRepository.searchArticle(key);
         model.addAttribute("articleList", articleList);
         return "articles";
     }
