@@ -24,18 +24,20 @@ public class LoginController {
     public String viewLoginPage(Model model, HttpServletRequest request){
         db.saveLog(request);
         model.addAttribute("user", new User());
-        return "login";
+        return "user/login";
     }
 
     @PostMapping("/processLogin")
     public String processLogin(User user, RedirectAttributes ra, HttpSession httpSession, HttpServletRequest request) {
+        System.out.println(user);
+
         db.saveLog(request);
         user.setPassword(encryptMD5(user.getPassword()));
-
+        System.out.println(user);
 
         try{
             Statement statement = db.connection.createStatement();
-            String query = "SELECT * FROM users WHERE username = '" + user.getUsername() + "' AND password = '" + user.getPassword() + "' AND is_active = 1";
+            String query = "SELECT * FROM users WHERE username = '" + user.getUsername() + "' AND password = '" + user.getPassword() + "' AND is_active = true";
             ResultSet checkUser = statement.executeQuery(query);
             if (checkUser != null) {
                 checkUser.next();

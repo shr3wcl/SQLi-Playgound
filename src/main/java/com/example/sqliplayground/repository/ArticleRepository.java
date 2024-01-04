@@ -11,9 +11,10 @@ import java.util.List;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    @Query("SELECT u FROM Article u WHERE u.title LIKE %?1% or u.content LIKE %?1% or u.author LIKE %?1%")
+
+    @Query("SELECT u FROM Article u WHERE u.title LIKE %?1% OR u.content LIKE %?1% OR u.author LIKE %?1%")
     List<Article> findArticleByKeySearch(String key);
 
-    @Procedure(name = "searchArticle")
+    @Query(value = "SELECT * FROM search_article(:p_Author)", nativeQuery = true)
     List<Article> searchArticle(@Param("p_Author") String p_Author);
 }

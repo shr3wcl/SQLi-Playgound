@@ -74,7 +74,16 @@ public class User {
         this.username = username;
     }
 
-    public String toString(){
-        return this.username + this.name + this.email+ this.id;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", isActive=" + isActive +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

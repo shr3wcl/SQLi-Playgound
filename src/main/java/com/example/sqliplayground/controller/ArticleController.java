@@ -25,7 +25,7 @@ public class ArticleController {
     public String showArticlePage(Model model){
         List<Article> articleList = articleRepository.findAll();
         model.addAttribute("articleList", articleList);
-        return "articles";
+        return "article/articles";
     }
 
     @Transactional
@@ -33,7 +33,7 @@ public class ArticleController {
     public String showSearchPage(Model model, @RequestParam("key") String key ){
         List<Article> articleList = articleRepository.searchArticle(key);
         model.addAttribute("articleList", articleList);
-        return "articles";
+        return "article/articles";
     }
 
     @GetMapping("/article/view/{id}")
@@ -52,11 +52,12 @@ public class ArticleController {
         }catch (SQLException ignored){
             model.addAttribute("errMsg", "Không tìm thấy bài viết này");
         }
-        return "detailArticle";
+        return "article/detail";
     }
 
     @PostMapping("/article/add")
     public String processAddArticle(Article article, RedirectAttributes ra){
+        System.out.println(article.toString());
         String query = "INSERT INTO article (title, content, author) VALUES ('" + article.getTitle() + "','" + article.getContent() + "','" + article.getAuthor()+"')";
         int result = db.executeUpdateQuery(query);
         if (result == 0){

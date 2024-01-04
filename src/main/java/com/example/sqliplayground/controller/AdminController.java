@@ -32,7 +32,7 @@ public class AdminController {
         List<User> listUser = userRepo.findAll();
         model.addAttribute("listUser", listUser);
         model.addAttribute("user", new User());
-        return "users";
+        return "admin/users";
     }
 
     @GetMapping("/users/edit/{id}")
@@ -42,7 +42,7 @@ public class AdminController {
             Optional<User> user = userRepo.findById(id);
             if (user.isPresent()) {
                 model.addAttribute("user", user.get());
-                return "edit_user";
+                return "user/edit_user";
             }else{
                 model.addAttribute("error", "Không tìm thấy người dùng");
                 return "redirect:/users";

@@ -33,7 +33,7 @@ public class UserController {
         db.saveLog(request);
         String username = (String) httpSession.getAttribute("username");
         if(username != null){
-            return "main";
+            return "user/main";
         }
         return "redirect:/";
     }
@@ -55,7 +55,7 @@ public class UserController {
         }catch (SQLException ignored){
             model.addAttribute("errMsg", "Không tìm thấy người dùng này");
         }
-        return "user";
+        return "user/user";
     }
 
     @GetMapping("/error")
@@ -65,18 +65,12 @@ public class UserController {
         return "error";
     }
 
+
     @GetMapping("/logout")
     public String processLogout(HttpSession httpSession, HttpServletRequest request){
         db.saveLog(request);
         httpSession.removeAttribute("username");
         httpSession.removeAttribute("id");
         return "redirect:/";
-    }
-
-    @GetMapping("/test/{id}")
-    public String test(@PathVariable("id") String id, Model model){
-        List<User> user = userRepo.findSQL(id);
-        model.addAttribute("a", user.toString());
-        return "test";
     }
 }

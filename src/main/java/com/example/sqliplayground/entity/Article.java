@@ -40,6 +40,17 @@ public class Article {
         this.visible = visible;
     }
 
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", author='" + author + '\'' +
+                ", visible=" + visible +
+                '}';
+    }
+
     @Column
     private Boolean visible = true;
 }

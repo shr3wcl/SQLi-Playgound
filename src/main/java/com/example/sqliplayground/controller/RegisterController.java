@@ -30,7 +30,7 @@ public class RegisterController {
     public String viewRegisterPage(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
         db.saveLog(request);
-        return "register";
+        return "user/register";
     }
 
     @PostMapping("/processRegister")
@@ -65,7 +65,7 @@ public class RegisterController {
         } catch (Exception e){
             model.addAttribute("errMsg", "Đã có lỗi! " + e);
         }
-        return "activate";
+        return "user/activate";
     }
     public String encryptMD5(String text) {
         try {
