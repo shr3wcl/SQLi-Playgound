@@ -1,3 +1,8 @@
+<%@ page import="java.io.File" %>
+<%@ page import="java.io.FileInputStream" %>
+<%@ page import="org.apache.commons.io.IOUtils" %>
+<%@ page import="org.apache.tomcat.util.codec.binary.Base64" %>
+<%@ page import="java.io.IOException" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -69,6 +74,11 @@
     <tr>
         <td>Email</td>
         <td><span><%= request.getAttribute("userEmail") %></span></td>
+    </tr>
+    <c:import url="http://localhost:8080/file?file=${avatar}" var="image" />
+    <tr>
+        <td>Avatar</td>
+        <td><img src="data:image/png;base64,${image}"  alt="avatar"></td>
     </tr>
 </table>
 </body>

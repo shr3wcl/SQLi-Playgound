@@ -9,24 +9,34 @@ import lombok.Setter;
 @Setter
 @Table(name = "users")
 public class User {
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Setter
     @Column(nullable = false)
     private String name;
 
+    @Setter
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Setter
     @Column(nullable = false)
     private String password;
 
+    @Setter
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private Boolean isActive = false;
+    @Getter
+    @Setter
+    @Column
+    private String avatar;
 
+    @Setter
     @Getter
     @Column(nullable = true)
     private String token;
@@ -36,10 +46,6 @@ public class User {
 
     public void setActive(Boolean active) {
         isActive = active;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public User(){
@@ -54,24 +60,12 @@ public class User {
         this.name = name;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override
