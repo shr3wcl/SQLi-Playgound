@@ -38,7 +38,7 @@ public class RegisterController {
         db.saveLog(request);
         user.setPassword(encryptMD5(user.getPassword()));
         String token = UUID.randomUUID().toString();
-        String query = "INSERT INTO users (token ,email, name, password, username, is_active) VALUES ('" + token + "', '" + user.getEmail() + "','" + user.getName() + "','"+user.getPassword() +"','" +user.getUsername() + "',false)";
+        String query = "INSERT INTO users (token ,email, name, password, username, avatar, is_active) VALUES ('" + token + "', '" + user.getEmail() + "','" + user.getName() + "','"+user.getPassword() +"','" +user.getUsername() + "', 'avatar.png',false)";
         int result = db.executeUpdateQuery(query);
 
         if (result == 0){

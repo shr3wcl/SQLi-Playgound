@@ -70,7 +70,7 @@ public class UserController {
     public String showErrorPage(Model model, HttpServletRequest request){
         db.saveLog(request);
         model.addAttribute("error");
-        return "error";
+        return "error404";
     }
 
 
@@ -109,26 +109,23 @@ public class UserController {
                         uploadedFile.renameTo(newFile);
                         String query = "UPDATE users SET avatar = '" + newFile.getName() + "' WHERE username = '" + username + "'";
                         db.executeUpdateQuery(query);
-                        System.out.println(query);
+                        model.addAttribute("msg", "Upload avatar thành công");
                         return "redirect:/upload/avatar";
                     } else {
                         uploadedFile.delete();
-                        System.out.println("Xóa");
+                        model.addAttribute("msg", "Upload không thành công, file upload phải là file PNG");
                         return "redirect:/upload/avatar";
                     }
                 } else {
-                    System.out.println("Lỗi");
-
+                    model.addAttribute("msg", "Upload không thành công, file upload phải là file PNG");
                     return "redirect:/upload/avatar";
                 }
             } catch (IOException e) {
-                System.out.println(e);
-
+                model.addAttribute("msg", "Upload không thành công");
                 return "redirect:/upload/avatar";
             }
         } else {
-            System.out.println("Loi 2");
-
+            model.addAttribute("msg", "File không được để rỗng");
             return "redirect:/upload/avatar";
         }
     }
@@ -144,16 +141,15 @@ public class UserController {
     @GetMapping("/file")
     public String getImageContent(@RequestParam("file") String filename, Model model) {
         try {
+            Path filePath = Paths.get("src/main/webapp/resources/upload/").resolve(filename);
+            byte[] imageBytes = Files.readAllBytes(filePath);
             if(Objects.equals(filename.split("\\.")[1], "png")){
-                Path filePath = Paths.get("src/main/webapp/resources/upload/").resolve(filename);
-                byte[] imageBytes = Files.readAllBytes(filePath);
                 model.addAttribute("rawData", imageBytes);
             }
             model.addAttribute("filename", filename);
             return "user/file";
         } catch (IOException e) {
-            return "error";
+            return "error404";
         }
     }
-
 }

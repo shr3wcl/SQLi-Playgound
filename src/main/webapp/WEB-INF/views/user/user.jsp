@@ -1,8 +1,3 @@
-<%@ page import="java.io.File" %>
-<%@ page import="java.io.FileInputStream" %>
-<%@ page import="org.apache.commons.io.IOUtils" %>
-<%@ page import="org.apache.tomcat.util.codec.binary.Base64" %>
-<%@ page import="java.io.IOException" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -57,7 +52,6 @@
 <div><span>${errMsg}</span></div>
 
 <h1>Thông tin tài khoản</h1>
-
 <table>
     <tr>
         <th>Thuộc tính</th>
@@ -78,7 +72,10 @@
     <c:import url="http://localhost:8080/file?file=${avatar}" var="image" />
     <tr>
         <td>Avatar</td>
-        <td><img src="data:image/png;base64,${image}"  alt="avatar"></td>
+        <td>
+            <div><img src="data:image/png;base64,${image}"  alt="avatar"></div>
+            <div><a href="/upload/avatar">Chỉnh sửa avatar</a></div>
+        </td>
     </tr>
 </table>
 </body>

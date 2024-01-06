@@ -27,7 +27,7 @@ public class AdminController {
     public String showListUserPage(Model model, HttpSession httpSession, HttpServletRequest request){
         db.saveLog(request);
         if(!Objects.equals(httpSession.getAttribute("username"), "admin")){
-            return "error";
+            return "error404";
         }
         List<User> listUser = userRepo.findAll();
         model.addAttribute("listUser", listUser);
@@ -51,7 +51,7 @@ public class AdminController {
 
         } catch (Error error){
             model.addAttribute("error", error);
-            return "error";
+            return "error404";
         }
     }
 
