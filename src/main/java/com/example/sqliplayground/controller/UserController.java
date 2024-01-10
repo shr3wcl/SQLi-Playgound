@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,55 +91,58 @@ public class UserController {
 
     @PostMapping("/upload/avatar")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model, @RequestParam("username") String username) {
-        if (!file.isEmpty()) {
-            try {
-                if (file.getContentType() != null && file.getContentType().equals("image/png")) {
-                    File uploadDir = new File(UPLOAD_DIR);
-                    File avatarDir = new File(AVATAR_DIR);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdirs();
-                    }
-                    if (!avatarDir.exists()) {
-                        avatarDir.mkdirs();
-                    }
-
-                    File uploadedFile = new File(uploadDir.getAbsolutePath() + File.separator + file.getOriginalFilename());
-                    file.transferTo(uploadedFile);
-
-                    if (file.getContentType().equals("image/png")) {
-                        File newFile = new File(avatarDir.getAbsolutePath() + File.separator + file.getOriginalFilename());
-                        uploadedFile.renameTo(newFile);
-                        String query = "UPDATE users SET avatar = '" + newFile.getName() + "' WHERE username = '" + username + "'";
-                        db.executeUpdateQuery(query);
-                        model.addAttribute("msg", "Upload avatar thành công");
-                        return "redirect:/upload/avatar";
-                    } else {
-                        uploadedFile.delete();
-                        model.addAttribute("msg", "Upload không thành công, file upload phải là file PNG");
-                        return "redirect:/upload/avatar";
-                    }
-                } else {
-                    model.addAttribute("msg", "Upload không thành công, file upload phải là file PNG");
-                    return "redirect:/upload/avatar";
-                }
-            } catch (IOException e) {
-                model.addAttribute("msg", "Upload không thành công");
-                return "redirect:/upload/avatar";
-            }
-        } else {
+        if (file.isEmpty()) {
             model.addAttribute("msg", "File không được để rỗng");
-            return "redirect:/upload/avatar";
+
+            return "user/upload";
+        }
+
+        try {
+            File uploadDir = new File("./src/main/webapp/resources/upload");
+            File avatarDir = new File("./src/main/webapp/resources/upload");
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            if (!avatarDir.exists()) {
+                avatarDir.mkdirs();
+            }
+
+            File uploadedFile = new File(uploadDir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+            file.transferTo(uploadedFile);
+//            try {
+//                Thread.sleep(20000); // 5000 milliseconds tương đương với 5 giây
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            if (!FilenameUtils.getExtension(file.getOriginalFilename()).equalsIgnoreCase("png")) {
+            System.out.println(FilenameUtils.getExtension(uploadedFile.getName()));
+            if (!FilenameUtils.getExtension(uploadedFile.getName()).equalsIgnoreCase("png")) {
+                model.addAttribute("msg", "Upload không thành công, file upload phải là file PNG");
+                uploadedFile.delete();
+                return "user/upload";
+            }
+
+            File newFile = new File(avatarDir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+            uploadedFile.renameTo(newFile);
+
+            String query = "UPDATE users SET avatar = '" + newFile.getName() + "' WHERE username = '" + username + "'";
+            db.executeUpdateQuery(query);
+
+            model.addAttribute("msg", "Upload avatar thành công");
+            return "user/upload";
+        } catch (IOException e) {
+            System.out.println(e);
+            model.addAttribute("msg", "Upload không thành công");
+            return "user/upload";
         }
     }
 
-//    @GetMapping("/images")
-//    public ResponseEntity<byte[]> getImageContent(@RequestParam("file") String filename) throws IOException {
-//        Path filePath = Paths.get(AVATAR_DIR).resolve(filename);
-//        byte[] imageBytes = Files.readAllBytes(filePath);
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(imageBytes);
-//    }
+    @GetMapping("/getFile/{file}")
+    public String getFile(@PathVariable("file") String filename, Model model) {
+        model.addAttribute("filename", filename);
+        return "user/getFile";
+    }
 
     @GetMapping("/file")
     public String getImageContent(@RequestParam("file") String filename, @RequestParam(value = "image", defaultValue = "false") String image,Model model) {
