@@ -138,18 +138,20 @@ public class UserController {
 //                .status(HttpStatus.OK)
 //                .body(imageBytes);
 //    }
+
     @GetMapping("/file")
-    public String getImageContent(@RequestParam("file") String filename, Model model) {
+    public String getImageContent(@RequestParam("file") String filename, @RequestParam(value = "image", defaultValue = "false") String image,Model model) {
         try {
             Path filePath = Paths.get("src/main/webapp/resources/upload/").resolve(filename);
             byte[] imageBytes = Files.readAllBytes(filePath);
             if(Objects.equals(filename.split("\\.")[1], "png")){
+                model.addAttribute("imageType", image);
                 model.addAttribute("rawData", imageBytes);
             }
             model.addAttribute("filename", filename);
             return "user/file";
         } catch (IOException e) {
-            return "error404";
+            return "user/file";
         }
     }
 }

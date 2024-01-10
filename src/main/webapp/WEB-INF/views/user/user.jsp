@@ -69,11 +69,13 @@
         <td>Email</td>
         <td><span><%= request.getAttribute("userEmail") %></span></td>
     </tr>
-    <c:import url="http://localhost:8080/file?file=${avatar}" var="image" />
+    <c:import url="http://localhost:8080/file?file=${avatar}&image=true" var="image" />
     <tr>
         <td>Avatar</td>
         <td>
-            <div><img src="data:image/png;base64,${image}"  alt="avatar"></div>
+<%--            <div><img src="data:image/png;base64,${image}"  alt="avatar"></div>--%>
+            <div>${image}</div>
+
             <div><a href="/upload/avatar">Chỉnh sửa avatar</a></div>
         </td>
     </tr>

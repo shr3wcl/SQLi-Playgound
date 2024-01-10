@@ -13,5 +13,13 @@
             pageContext.setAttribute("img", base64Image);
         }
     %>
-    ${img}
+    <c:choose>
+        <c:when test="${imageType eq 'false'}">
+            ${img}
+        </c:when>
+        <c:otherwise>
+            <img src="data:image/png;base64,${img}"/>
+        </c:otherwise>
+    </c:choose>
+
 </c:if>
